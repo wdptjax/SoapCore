@@ -47,6 +47,9 @@ namespace SoapCore
 
 			var xsiPrefix = Namespaces.AddNamespaceIfNotAlreadyPresentAndGetPrefix(namespaces, "xsi", Namespaces.XMLNS_XSI);
 			writer.WriteXmlnsAttribute(xsiPrefix, Namespaces.XMLNS_XSI);
+
+			var srrcPrefix = Namespaces.AddNamespaceIfNotAlreadyPresentAndGetPrefix(namespaces, "srrc", "http://www.srrc.org.cn");
+			writer.WriteXmlnsAttribute(srrcPrefix, "http://www.srrc.org.cn");
 		}
 
 		protected override void OnWriteStartBody(XmlDictionaryWriter writer)
