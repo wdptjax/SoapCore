@@ -86,7 +86,8 @@ namespace SoapCore
 
 			if (needResponseEnvelope)
 			{
-				writer.WriteStartElement(_envelopeName, _serviceNamespace);
+				// wudepeng 按照原子化服务的协议修改，去除返回的soapBody中的Action
+				// writer.WriteStartElement(_envelopeName, _serviceNamespace);
 			}
 
 			if (_result != null)
@@ -261,7 +262,8 @@ namespace SoapCore
 
 			if (needResponseEnvelope)
 			{
-				writer.WriteEndElement();
+				// wudepeng 按照原子化服务的协议修改，去除返回的soapBody中的Action
+				// writer.WriteEndElement();
 			}
 		}
 
