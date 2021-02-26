@@ -354,7 +354,8 @@ namespace SoapCore
 						operation, responseObject, resultOutDictionary, soapAction, requestMessage, messageEncoder);
 
 					httpContext.Response.ContentType = httpContext.Request.ContentType;
-					httpContext.Response.Headers["SOAPAction"] = responseMessage.Headers.Action;
+					// wudepeng 返回的soap中添加soapAction，原来的代码action为null
+					httpContext.Response.Headers["SOAPAction"] = soapAction;//responseMessage.Headers.Action;
 
 					correlationObjects2.ForEach(mi => mi.inspector.BeforeSendReply(ref responseMessage, _service, mi.correlationObject));
 
@@ -508,7 +509,8 @@ namespace SoapCore
 			{
 				if (xmlReader != null)
 				{
-					xmlReader.ReadStartElement(operation.Name, operation.Contract.Namespace);
+					// wudepeng 按照原子化服务的格式修改代码，去除soapBody中的Action校验
+					// xmlReader.ReadStartElement(operation.Name, operation.Contract.Namespace);
 					while (!xmlReader.EOF)
 					{
 						var parameterInfo = operation.InParameters.FirstOrDefault(p => p.Name == xmlReader.LocalName);
@@ -534,7 +536,7 @@ namespace SoapCore
 							argumentValue = _serializerHelper.DeserializeInputParameter(
 								xmlReader,
 								parameterType,
-								parameterInfo.Name,
+								parameterInfo.Namespace,
 								parameterInfo.Namespace,
 								parameterInfo.Parameter.Member,
 								serviceKnownTypes);
