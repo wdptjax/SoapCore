@@ -793,7 +793,8 @@ namespace SoapCore.Meta
 			}
 			else
 			{
-				AddSchemaType(writer, toBuild, parentTypeToBuild.ChildElementName ?? property.Name, isArray: createListWithoutProxyType, isListWithoutWrapper: createListWithoutProxyType);
+				// wudepeng 原来的代码有bug，如果在类型上面定义了XmlElementAttribute，则wsdl文件中的类型下的所有子属性都会被定义为这个名字
+				AddSchemaType(writer, toBuild, elementItem?.ElementName ?? parentTypeToBuild.ChildElementName ?? property.Name, isArray: createListWithoutProxyType, isListWithoutWrapper: createListWithoutProxyType);
 			}
 		}
 
